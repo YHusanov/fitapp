@@ -4,7 +4,6 @@ import "time"
 
 type Meal struct {
 	ID       uint   `gorm:"primaryKey" json:"id"`
-	UserID   uint   `json:"user_id"`
 	Name     string `json:"name"` // e.g., "Pilaf", "Soup"
 	Calories int    `json:"calories"`
 	Protein  int    `json:"protein"`
@@ -15,7 +14,6 @@ type Meal struct {
 
 type Exercise struct {
 	ID             uint   `gorm:"primaryKey" json:"id"`
-	UserID         uint   `json:"user_id"`
 	Name           string `json:"name"`     // e.g., "Push-ups", "Running"
 	Duration       int    `json:"duration"` // in minutes
 	CaloriesBurned int    `json:"calories_burned"`
