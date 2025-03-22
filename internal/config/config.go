@@ -20,12 +20,18 @@ func LoadConfig() *Config {
 		log.Fatal("Error loading .env file")
 	}
 
-	dsn := "host=" + os.Getenv("DB_HOST") +
-		" user=" + os.Getenv("DB_USER") +
-		" password=" + os.Getenv("DB_PASSWORD") +
-		" dbname=" + os.Getenv("DB_NAME") +
-		" port=" + os.Getenv("DB_PORT") +
-		" sslmode=require" // Koyeb uchun sslmode=require
+	// Agar DATABASE_URL mavjud bo‘lsa, undan foydalanamiz
+	dsn := os.Getenv("DATABASE_URL")
+	if dsn == "" {
+		// Agar DATABASE_URL yo‘q bo‘lsa, eski usul bilan DSN yasaymiz
+		dsn = "host=" + os.Getenv("DB_HOST") +
+			" user=" + os.Getenv("DB_USER") +
+			" password=" + os.Getenv("DB_PASSWORD") +
+			" dbname=" + os.Getenv("DB_NAME") +
+			" port=" + os.Getenv("DB_PORT") +
+			" sslmode=require"
+	}
+
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
