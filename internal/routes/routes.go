@@ -35,6 +35,7 @@ func SetupRoutes(cfg *config.Config) *gin.Engine {
 		auth.POST("/community/posts/:post_id/comments", communityHandler.CreateComment)
 		auth.GET("/community/posts/:post_id/comments", communityHandler.GetComments)
 		auth.PUT("/update", userHandler.UpdateUser)
+		auth.GET("/users", userHandler.GetAllUsers)
 	}
 
 	reminderSvc.Start()

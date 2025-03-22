@@ -25,7 +25,7 @@ func LoadConfig() *Config {
 		" password=" + os.Getenv("DB_PASSWORD") +
 		" dbname=" + os.Getenv("DB_NAME") +
 		" port=" + os.Getenv("DB_PORT") +
-		" sslmode=disable"
+		" sslmode=require" // Koyeb uchun sslmode=require
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatal("Failed to connect to database:", err)
