@@ -5,12 +5,21 @@ import (
 	"diplomIshi/internal/handlers"
 	"diplomIshi/internal/repository"
 	"diplomIshi/internal/services"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
 func SetupRoutes(cfg *config.Config) *gin.Engine {
 	r := gin.Default()
 
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:5173"}, // Allow your frontend origin
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
+		ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+		MaxAge:           12 * 60 * 60, // 12 hours
+	}))
 	userRepo := repository.NewUserRepository(cfg.DB)
 	calcSvc := services.NewCalculatorService(cfg.DB)
 	reminderSvc := services.NewReminderService(userRepo)
